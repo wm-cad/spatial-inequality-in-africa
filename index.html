@@ -26,13 +26,13 @@
   color: #FFFFFF
 }
 
-/* This controls the menu for selecting layers on and off */
+/* This controls the menu for selecting layers on and off --------------------------------- */
 .menu {
     background: #000000;
     position: absolute;
     z-index: 1;
     top: 80px;
-    right: 40px;
+    right: 80px;
     border-radius: 2px;
     width: 175px;
     border: 3px solid black;
@@ -84,7 +84,7 @@
     background: #1C5989;
   }
 
-/* This controls the size and location of the legend */
+/* This controls the size and location of the legend --------------------------------------------------- */
 .legend {
   background-color: #232323;
   border-radius: 2px;
@@ -130,7 +130,33 @@
   /*font-size: 12px;*/
   }
 
+/* This adjusts the pop-ups --------------------------------------------------------------- */
+.mapboxgl-popup {
+      /* background-color: #000000; */
+      /* color: #FFFFFF;  font color */
+      max-width: 500px;
+      font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      border-radius: 2px;
+  }
+
+  .mapboxgl-popup h1 {
+      margin: 5 0 5px;
+      color: white;
+      font-size: 16px;
+    }
+
 </style>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 <div id="feature-menu" class="menu">
   <h3>Spatial Layers</h3>
@@ -176,7 +202,14 @@ map.on('load', function () {
         },
         "source-layer": "hance-34701m",
         "paint": {
-          "circle-radius": 2,
+          "circle-radius": {
+                'base': 2,
+                'stops': [
+                    [3, 2], //zoom level 3
+                    [12, 25], // zoom level 12
+                    [22, 50] //zoom level 22
+                ]
+          },
           "circle-color": [
                'match',
                ['get', 'resource'],
@@ -195,10 +228,44 @@ map.on('load', function () {
         }
   });
 
+  // When a click event occurs on a feature in the states layer, open a popup at the
+  // location of the click, with description HTML from its properties.
+  map.on('click', 'Hance', function(e) {
+    var coordinates = e.features[0].geometry.coordinates.slice();
+    var description = e.features[0].properties.resource;
+    var popupOffsets = {
+        'top': [0, 0],
+        'top-left': [0,0],
+        'top-right': [0,0],
+        'bottom': [0,0],
+        'bottom-left': [0,0],
+        'bottom-right': [0,0],
+        'left': [0,0],
+        'right': [0,0]
+        };
+
+  new mapboxgl.Popup({offset: popupOffsets})
+    .setLngLat(coordinates)
+    .setHTML(description)
+    //.closeOnClick(True)
+    //.anchor('center')
+    .addTo(map);
+
+  });
+
+  // Change the cursor to a pointer when the mouse is over the states layer.
+  map.on('mouseenter', 'Hance', function() {
+  map.getCanvas().style.cursor = 'pointer';
+  });
+
+  // Change it back to a pointer when it leaves.
+  map.on('mouseleave', 'Hance', function() {
+  map.getCanvas().style.cursor = '';
+  });
+
 });
 
 // --------------------------------------------------------------------------------------------------
-// Adds the Buenos Aires CBD travel times and feature to the map
 var toggleableLayerIds01 = ['Hance'];
 
 var link01 = document.createElement('a');
@@ -224,6 +291,7 @@ link01.onclick = function (e) {
 
 };
 
+// -------------------------------------------------------------------------------------------------
 // Adds the layer selection boxes to the map
 var layer_menu = document.getElementById('feature-menu');
 layer_menu.appendChild(link01);
@@ -236,6 +304,26 @@ map.on('zoom', function() {
     spineqLegend.style.display = 'block';
   }
 });
+
+// -------------------------------------------------------------------------------------------------
+// Add a geocoder
+map.addControl(
+new MapboxGeocoder({
+accessToken: mapboxgl.accessToken,
+mapboxgl: mapboxgl
+})
+);
+
+// -------------------------------------------------------------------------------------------------
+// disable map rotation using right click + drag
+map.dragRotate.disable();
+
+// -------------------------------------------------------------------------------------------------
+// disable map rotation using touch rotation gesture
+map.touchZoomRotate.disableRotation();
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
 
 </script>
 </body>
