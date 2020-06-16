@@ -159,6 +159,7 @@ width: 180px;
       font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-size: 14px;
       border-radius: 2px;
+      anchor-left
   }
 
   .mapboxgl-popup h1 {
@@ -247,20 +248,20 @@ map.on('load', function () {
         },
         "source-layer": "hance-34701m",
         "paint": {
-          "circle-radius": //[
-          //        'interpolate', ['linear'], ['zoom'],
-          //        3, ['/', ['number', ['get', 'frequency']], 1],
-          //        12, ['/', ['number', ['get', 'frequency']], 30],
-          //        22, ['/', ['number', ['get', 'frequency']], 15],
-          // ],
-                           {
-                'base': 2,
-                'stops': [
-                    [3, 2], //zoom level 3
-                    [12, 25], // zoom level 12
-                    [22, 50] //zoom level 22
-                ]
-          },
+          "circle-radius": [
+                  'interpolate', ['linear'], ['zoom'],
+                  3, ['*', ['^', ['number', ['get', 'frequency']], 0.25], 2],
+                  12, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 3],
+                  22, ['*', ['^', ['number', ['get', 'frequency']], 0.75], 5],
+           ],
+                //           {
+                //'base': 2,
+                //'stops': [
+                //    [3, 2], //zoom level 3
+                //    [12, 25], // zoom level 12
+                //    [22, 50] //zoom level 22
+                //]
+          //},
           "circle-color": [
                'match',
                ['get', 'resource'],
@@ -275,7 +276,8 @@ map.on('load', function () {
                'Manufactured Products', '#5708a1',
                'Other Oils', '#000000',
                 /* other */ '#7c7e7c'
-          ]
+          ],
+          'circle-opacity': 0.75
         }
   });
 
