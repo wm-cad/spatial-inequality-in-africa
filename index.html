@@ -82,7 +82,7 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-.menu h3 {
+.menu h2 {
   color: #FFFFFF;
   margin: 5 5 5px;
 }
@@ -98,11 +98,11 @@
   /* font color of layer menu */
   color: #000000;
   background-color: #F5F9FD;
-  //border: 1px solid navy;
+  border: 1px solid navy;
   display: block;
   margin: 0;
   /*padding: 0;*/
-  padding: 5px;
+  padding: 3px;
   text-decoration: none;
   border-top: 1px solid black;
   /*border-bottom: 1px solid black;*/
@@ -230,7 +230,7 @@
 
   <!-- Menu items -->
   <div id="feature-menu" class="menu">
-    <h3>Spatial Layers</h3>
+    <h2>Spatial Layers</h2>
   </div>
 
   <!-- Legend items -->
@@ -272,6 +272,23 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoid20tY2FkIiwiYSI6ImNrYjZsZ3NsbTAyNHEyeHFjeHo4N
 // Map layers ====================================================
 map.on('load', function () {
 
+  // JEDWAB-MORADI RIVERS -----------------------------------------------
+  map.addLayer({
+        "id": "Jedwab-Moradi Rivers",
+        "type": "line",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.aow1h8y5',
+        },
+        "source-layer": "jw_rivers-36fhrf",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#3678ce"
+        }
+  });
+
   // JEDWAB-MORADI RAILWAYS -----------------------------------------------
   map.addLayer({
         "id": "Jedwab-Moradi Railways",
@@ -280,39 +297,57 @@ map.on('load', function () {
           type: 'vector',
           url: 'mapbox://wm-cad.a0a6ihx4',
         },
-        "source-layer": "jw_railroads-cq5ajy"
+        "source-layer": "jw_railroads-cq5ajy",
+        "layout": {
+            "visibility": "visible"
+        }
         //"paint":
   });
 
+  // EXPLORER ROUTES -----------------------------------------------
+  map.addLayer({
+        "id": "Explorer Routes",
+        "type": "line",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.0byohth4',
+        },
+        "source-layer": "explorer_routes-7ad7ih",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#4e3f37"
+        }
 
-    map.addLayer({
-          "id": "Hance",
-          "type": "circle",
-          "source": {
-            type: 'vector',
-            url: 'mapbox://wm-cad.8nsn687a',
-          },
-          "source-layer": "hance-34701m",
-          "paint": {
-            "circle-radius": [
-                    'interpolate', ['linear'], ['zoom'],
-                    3, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 1.5],
-                    8, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 3.5],
-                    13, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 10],
-             ],
-                  //           {
-                  //'base': 2,
-                  //'stops': [
-                  //    [3, 2], //zoom level 3
-                  //    [12, 25], // zoom level 12
-                  //    [22, 50] //zoom level 22
-                  //]
-            //},
-            "circle-color": [
+  });
+
+// HANCE DATA -----------------------------------------------
+  map.addLayer({
+        "id": "Hance",
+        "type": "circle",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.8nsn687a',
+        },
+        "source-layer": "hance-34701m",
+        "layout": {
+            "visibility": "visible"
+        },
+        "paint": {
+          "circle-radius": [
+                  'interpolate', ['linear'], ['zoom'],
+                  3, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 1.5],
+                  8, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 3.5],
+                  13, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 10],
+            ],
+          "circle-color": [
                  'match',
                  ['get', 'resource'],
                  'Coffee', '#552a11',
+                 //'Coffee', '#1e7625',
                  'Cacao', '#9d4e20',
+                 //'Cacao', '#1e7625',
                  'Cotton', '#6fb9e2',
                  'Peanuts', '#e58015',
                  'Palm', '#32c908',
@@ -360,7 +395,6 @@ var toggleableLayerIds01 = ['Hance'];
 
 var link01 = document.createElement('a');
 link01.href = '#';
-//link1.className = 'active';
 link01.textContent = "Hance resources";
 link01.onclick = function (e) {
     for(var index01 in toggleableLayerIds01) {
@@ -379,39 +413,88 @@ link01.onclick = function (e) {
       }
     }
 
-};
+  };
 
-var toggleableLayerIds02 = ['Jedwab-Moradi Railways'];
+  var toggleableLayerIds02 = ['Jedwab-Moradi Railways'];
 
-var link02 = document.createElement('a');
-link02.href = '#';
-//link1.className = 'active';
-link02.textContent = "Colonial railways";
-link02.onclick = function (e) {
-    for(var index02 in toggleableLayerIds02) {
-      var clickedLayer02 = toggleableLayerIds02[index02];
-      e.preventDefault();
-      e.stopPropagation();
+  var link02 = document.createElement('a');
+  link02.href = '#';
+  //link1.className = 'active';
+  link02.textContent = "Colonial railways";
+  link02.onclick = function (e) {
+      for(var index02 in toggleableLayerIds02) {
+        var clickedLayer02 = toggleableLayerIds02[index02];
+        e.preventDefault();
+        e.stopPropagation();
 
-      var visibility02 = map.getLayoutProperty(clickedLayer02, 'visibility');
+        var visibility02 = map.getLayoutProperty(clickedLayer02, 'visibility');
 
-      if (visibility02 === 'visible') {
-          map.setLayoutProperty(clickedLayer02, 'visibility', 'none');
-          this.className = '';
-      } else {
-          this.className = 'active';
-          map.setLayoutProperty(clickedLayer02, 'visibility', 'visible');
+        if (visibility02 === 'visible') {
+            map.setLayoutProperty(clickedLayer02, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer02, 'visibility', 'visible');
+        }
       }
-    }
 
-};
+  };
+
+  var toggleableLayerIds03 = ['Jedwab-Moradi Rivers'];
+
+  var link03 = document.createElement('a');
+  link03.href = '#';
+  link03.textContent = "Rivers";
+  link03.onclick = function (e) {
+      for(var index03 in toggleableLayerIds03) {
+        var clickedLayer03 = toggleableLayerIds03[index03];
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility03 = map.getLayoutProperty(clickedLayer03, 'visibility');
+
+        if (visibility03 === 'visible') {
+            map.setLayoutProperty(clickedLayer03, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer03, 'visibility', 'visible');
+        }
+      }
+
+  };
+
+  var toggleableLayerIds04 = ['Explorer Routes'];
+
+  var link04 = document.createElement('a');
+  link04.href = '#';
+  link04.textContent = "Explorer Routes";
+  link04.onclick = function (e) {
+      for(var index04 in toggleableLayerIds04) {
+        var clickedLayer04 = toggleableLayerIds04[index04];
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility04 = map.getLayoutProperty(clickedLayer04, 'visibility');
+
+        if (visibility04 === 'visible') {
+            map.setLayoutProperty(clickedLayer04, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer04, 'visibility', 'visible');
+        }
+      }
+
+  };
 
 // -------------------------------------------------------------------------------------------------
 // Adds the layer selection boxes to the map
 var layer_menu = document.getElementById('feature-menu');
 layer_menu.appendChild(link01);
 layer_menu.appendChild(link02);
-
+layer_menu.appendChild(link03);
+layer_menu.appendChild(link04);
 
 // -------------------------------------------------------------------------------------------------
 // Add a legend to the map
