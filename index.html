@@ -14,96 +14,118 @@
 
 /* This controls styling for the map elements ---------------------------------------------- */
 .map {
-  background-color: #000000;
-  color: black;
-  border: 2px solid black;
-  padding: 0px
+  opacity: 1.0;
+  border: 0px solid black;
+  padding: 0px;
 }
 
-.map h1 {
-  margin: 20 10 20px;
-  font-size: 30px;
-  color: #FFFFFF
+/* This controls styling for the title elements ------------------------------------------------------------- */
+.title {
+  font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background-color: black;
+  border: 1px solid black;
+  opacity: 1.0;
+  z-index: 1;
+}
+
+.title h1 {
+  margin: 15 10 15px;
+  font-size: 28px;
+  color: white;
+}
+
+.title p {
+  margin: 5 10 10px;
+  font-size: 11.5px;
+  color: white;
+}
+
+/* This controls the geocoder --------------------------------- */
+.geocoder {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  z-index: 2;
 }
 
 /* This controls the box for filtering map items --------------------------------- */
 .filter-ctrl {
-position: absolute;
-top: 80px;
-left: 30px;
-z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  z-index: 3;
 }
 
 .filter-ctrl input[type='text'] {
-font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-width: 100%;
-border: 0;
-background-color: #fff;
-margin: 0;
-color: rgba(0, 0, 0, 0.5);
-padding: 10px;
-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-border-radius: 3px;
-width: 180px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  width: 100%;
+  border: 0;
+  background-color: #fff;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  width: 180px;
 }
 
 /* This controls the menu for selecting layers on and off --------------------------------- */
 .menu {
-    background: #000000;
-    position: absolute;
-    z-index: 1;
-    top: 80px;
-    right: 80px;
-    border-radius: 2px;
-    width: 175px;
-    border: 3px solid black;
-    font-family: 'Open Sans', sans-serif;
-  }
+  background: #000000;
+  position: absolute;
+  z-index: 1;
+  bottom: 80px;
+  right: 25px;
+  border-radius: 2px;
+  width: 175px;
+  border: 3px solid black;
+  font-family: 'Open Sans', sans-serif;
+}
 
 .menu h3 {
-      color: #FFFFFF;
-      margin: 5 5 5px;
-    }
+  color: #FFFFFF;
+  margin: 5 5 5px;
+}
 
 .menu p {
-      color: #E8E8E8;
-      font-size: 14px;
-      margin: 10 5 10px;
-    }
+  color: #E8E8E8;
+  font-size: 14px;
+  margin: 10 5 10px;
+}
 
 .menu a {
-    font-size: 14px;
-    /* font color of layer menu */
-    color: #000000;
-    background-color: #F5F9FD;
-    //border: 1px solid navy;
-    display: block;
-    margin: 0;
-    /*padding: 0;*/
-    padding: 5px;
-    text-decoration: none;
-    border-top: 1px solid black;
-    /*border-bottom: 1px solid black;*/
-    text-align: center;
-  }
+  font-size: 14px;
+  /* font color of layer menu */
+  color: #000000;
+  background-color: #F5F9FD;
+  //border: 1px solid navy;
+  display: block;
+  margin: 0;
+  /*padding: 0;*/
+  padding: 5px;
+  text-decoration: none;
+  border-top: 1px solid black;
+  /*border-bottom: 1px solid black;*/
+  text-align: center;
+}
 
 .menu a:last-child {
-    border-top: 1px solid black;
-  }
+  border-top: 1px solid black;
+}
 
 .menu a:hover {
-    background-color: #BAD8F2;
-    color: #404040;
-  }
+  background-color: #BAD8F2;
+  color: #404040;
+}
 
 .menu a.active {
-    background-color: #5B94C0;
-    color: #ffffff;
-  }
+  background-color: #5B94C0;
+  color: #ffffff;
+}
 
 .menu a.active:hover {
-    background: #1C5989;
-  }
+  background: #1C5989;
+}
 
 /* This controls the size and location of the legend --------------------------------------------------- */
 .legend {
@@ -115,32 +137,32 @@ width: 180px;
   /*box-shadow: 0 1px 2px rgba(0, 0, 0, 1);*/
   padding: 10px;
   position: absolute;
-  bottom: 40px;
+  bottom: 80px;
   left: 25px;
   z-index: 1;
   border: 2px solid block;
-  }
+}
 
 .legend h2 {
   margin: 5 0 5px;
   color: white;
   font-size: 16px;
-  }
+}
 
 .legend p {
   margin: 5 0 5px;
   font-size: 12px;
   color: #E8E8E8;
-  }
+}
 
 .legend div span-rec {
-    border-radius: 0%;
-    display: inline-block;
-    height: 10px;
-    width: 15px;
-    margin-right: 10px;
-    /*font-size: 12px;*/
-    }
+  border-radius: 0%;
+  display: inline-block;
+  height: 10px;
+  width: 15px;
+  margin-right: 10px;
+  /*font-size: 12px;*/
+}
 
 .legend div span {
   border-radius: 50%;
@@ -149,72 +171,82 @@ width: 180px;
   width: 10px;
   margin-right: 10px;
   /*font-size: 12px;*/
-  }
+}
 
 /* This adjusts the pop-ups --------------------------------------------------------------- */
 .mapboxgl-popup {
-      /* background-color: #000000; */
-      /* color: #FFFFFF;  font color */
-      max-width: 500px;
-      font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      border-radius: 2px;
-      anchor-left
-  }
+  /* background-color: #000000; */
+  /* color: #FFFFFF;  font color */
+  max-width: 500px;
+  font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border-radius: 2px;
+}
 
-  .mapboxgl-popup h1 {
-      margin: 5 0 5px;
-      color: white;
-      font-size: 16px;
-    }
+.mapboxgl-popup h1 {
+  margin: 5 0 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+  margin-top: 15px;
+}
 
 </style>
 
-<!-- Adds the geocoder -->
-<div class="geocoder">
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-
-<!-- Will allow user to filter items on the map -->
-<div class="filter-ctrl">
-<input
-id="filter-input"
-type="text"
-name="filter"
-placeholder="Filter by name"
-/>
-</div>
-
-<!-- Menu items -->
-<div id="feature-menu" class="menu">
-  <h3>Spatial Layers</h3>
+<!-- Map Divisions --------------------------------------------------------------------------------------------------------->
+<!-- Title items -->
+<div id="title" class="title">
+<h1>Spatial Inequality in Africa</h1>
 </div>
 
 <!-- Map Name -->
 <div id='map' class="map" style='height:100%; width:100%'>
-<h1>Spatial Inequality in Africa</h1>
-</div>
 
-<!-- Legend items -->
-<div id="legend-sp-ineq" class="legend">
-  <h2>Resources</h2>
-  <div><span style="background-color: #9d4e20"></span>Cocoa</div>
-  <div><span style="background-color: #552a11"></span>Coffee</div>
-  <div><span style="background-color: #6fb9e2"></span>Cotton</div>
-  <div><span style="background-color: #164a07"></span>Forest Products</div>
-  <div><span style="background-color: #5708a1"></span>Manufactured Goods</div>
-  <div><span style="background-color: #7c7e7c"></span>Minerals</div>
-  <div><span style="background-color: #32c908"></span>Palm</div>
-  <div><span style="background-color: #e58015"></span>Peanuts</div>
-  <div><span style="background-color: #000000"></span>Petroleum</div>
+  <!-- Will allow user to filter items on the map -->
+  <div class="filter-ctrl">
+  <input
+  id="filter-input"
+  type="text"
+  name="filter"
+  placeholder="Filter by name"
+  />
+  </div>
+
+  <!-- Adds the geocoder -->
+  <div class="geocoder">
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+  type="text/css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+  </div>
+
+  <!-- Menu items -->
+  <div id="feature-menu" class="menu">
+    <h3>Spatial Layers</h3>
+  </div>
+
+  <!-- Legend items -->
+  <div id="legend-sp-ineq" class="legend">
+    <h2>Resources</h2>
+    <div><span style="background-color: #9d4e20"></span>Cocoa</div>
+    <div><span style="background-color: #552a11"></span>Coffee</div>
+    <div><span style="background-color: #6fb9e2"></span>Cotton</div>
+    <div><span style="background-color: #164a07"></span>Forest Products</div>
+    <div><span style="background-color: #5708a1"></span>Manufactured Goods</div>
+    <div><span style="background-color: #7c7e7c"></span>Minerals</div>
+    <div><span style="background-color: #32c908"></span>Palm</div>
+    <div><span style="background-color: #e58015"></span>Peanuts</div>
+    <div><span style="background-color: #000000"></span>Petroleum</div>
+  </div>
+
 </div>
 
 <script>
@@ -230,82 +262,96 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoid20tY2FkIiwiYSI6ImNrYjZsZ3NsbTAyNHEyeHFjeHo4N
         var map = new mapboxgl.Map({
           container: 'map', //HTML container ID
           style: 'mapbox://styles/mapbox/light-v10', //style URL
-          center: [20.65, -1.616667], //start position (lat/long)
+          center: [18, -6], //start position (lat/long)
           zoom: 3,
           minZoom: 3,
           maxZoom: 16
         });
     }
 
+// Map layers ====================================================
 map.on('load', function () {
 
+  // JEDWAB-MORADI RAILWAYS -----------------------------------------------
   map.addLayer({
-        "id": "Hance",
-        "type": "circle",
+        "id": "Jedwab-Moradi Railways",
+        "type": "line",
         "source": {
           type: 'vector',
-          url: 'mapbox://wm-cad.8nsn687a',
+          url: 'mapbox://wm-cad.a0a6ihx4',
         },
-        "source-layer": "hance-34701m",
-        "paint": {
-          "circle-radius": [
-                  'interpolate', ['linear'], ['zoom'],
-                  3, ['*', ['^', ['number', ['get', 'frequency']], 0.25], 2],
-                  12, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 3],
-                  22, ['*', ['^', ['number', ['get', 'frequency']], 0.75], 5],
-           ],
-                //           {
-                //'base': 2,
-                //'stops': [
-                //    [3, 2], //zoom level 3
-                //    [12, 25], // zoom level 12
-                //    [22, 50] //zoom level 22
-                //]
-          //},
-          "circle-color": [
-               'match',
-               ['get', 'resource'],
-               'Coffee', '#552a11',
-               'Cacao', '#9d4e20',
-               'Cotton', '#6fb9e2',
-               'Peanuts', '#e58015',
-               'Palm', '#32c908',
-               'Forest Products', '#164a07',
-               'Gold', '#9c8107',
-               'Petroleum', '#000000',
-               'Manufactured Products', '#5708a1',
-               'Other Oils', '#000000',
-                /* other */ '#7c7e7c'
-          ],
-          'circle-opacity': 0.75
-        }
+        "source-layer": "jw_railroads-cq5ajy"
+        //"paint":
   });
 
-  // When a click event occurs on a feature in the states layer, open a popup at the
-  // location of the click, with description HTML from its properties.
-  map.on('click', 'Hance', function(e) {
-    //var coordinates = e.features[0].geometry.coordinates.slice();
-    var resource = e.features[0].properties.resource;
-    var frequency = e.features[0].properties.frequency;
 
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML('<b>Product: </b>' + resource + '<br><b>Frequency: </b>' + frequency)
-      //.closeOnClick(True)
-      //.anchor('center')
-      .addTo(map);
-
+    map.addLayer({
+          "id": "Hance",
+          "type": "circle",
+          "source": {
+            type: 'vector',
+            url: 'mapbox://wm-cad.8nsn687a',
+          },
+          "source-layer": "hance-34701m",
+          "paint": {
+            "circle-radius": [
+                    'interpolate', ['linear'], ['zoom'],
+                    3, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 1.5],
+                    8, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 3.5],
+                    13, ['*', ['^', ['number', ['get', 'frequency']], 0.5], 10],
+             ],
+                  //           {
+                  //'base': 2,
+                  //'stops': [
+                  //    [3, 2], //zoom level 3
+                  //    [12, 25], // zoom level 12
+                  //    [22, 50] //zoom level 22
+                  //]
+            //},
+            "circle-color": [
+                 'match',
+                 ['get', 'resource'],
+                 'Coffee', '#552a11',
+                 'Cacao', '#9d4e20',
+                 'Cotton', '#6fb9e2',
+                 'Peanuts', '#e58015',
+                 'Palm', '#32c908',
+                 'Forest Products', '#164a07',
+                 'Gold', '#9c8107',
+                 'Petroleum', '#000000',
+                 'Manufactured Products', '#5708a1',
+                 'Other Oils', '#000000',
+                  /* other */ '#7c7e7c'
+            ],
+            'circle-opacity': 0.75
+          }
     });
 
-  // Change the cursor to a pointer when the mouse is over the states layer.
-  map.on('mouseenter', 'Hance', function() {
-  map.getCanvas().style.cursor = 'pointer';
-  });
+    // When a click event occurs on a feature in the states layer, open a popup at the
+    // location of the click, with description HTML from its properties.
+    map.on('click', 'Hance', function(e) {
+      //var coordinates = e.features[0].geometry.coordinates.slice();
+      var resource = e.features[0].properties.resource;
+      var frequency = e.features[0].properties.frequency;
 
-  // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'Hance', function() {
-  map.getCanvas().style.cursor = '';
-  });
+      new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML('<b>Product: </b>' + resource + '<br><b>Frequency: </b>' + frequency)
+        //.closeOnClick(True)
+        //.anchor('center')
+        .addTo(map);
+
+      });
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'Hance', function() {
+    map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'Hance', function() {
+    map.getCanvas().style.cursor = '';
+    });
 
 });
 
@@ -335,10 +381,37 @@ link01.onclick = function (e) {
 
 };
 
+var toggleableLayerIds02 = ['Jedwab-Moradi Railways'];
+
+var link02 = document.createElement('a');
+link02.href = '#';
+//link1.className = 'active';
+link02.textContent = "Colonial railways";
+link02.onclick = function (e) {
+    for(var index02 in toggleableLayerIds02) {
+      var clickedLayer02 = toggleableLayerIds02[index02];
+      e.preventDefault();
+      e.stopPropagation();
+
+      var visibility02 = map.getLayoutProperty(clickedLayer02, 'visibility');
+
+      if (visibility02 === 'visible') {
+          map.setLayoutProperty(clickedLayer02, 'visibility', 'none');
+          this.className = '';
+      } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer02, 'visibility', 'visible');
+      }
+    }
+
+};
+
 // -------------------------------------------------------------------------------------------------
 // Adds the layer selection boxes to the map
 var layer_menu = document.getElementById('feature-menu');
 layer_menu.appendChild(link01);
+layer_menu.appendChild(link02);
+
 
 // -------------------------------------------------------------------------------------------------
 // Add a legend to the map
@@ -352,20 +425,20 @@ map.on('zoom', function() {
 // -------------------------------------------------------------------------------------------------
 // Add a geocoder
 map.addControl(
-new MapboxGeocoder({
-accessToken: mapboxgl.accessToken,
-mapboxgl: mapboxgl
-})
+
+  new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  mapboxgl: mapboxgl
+  })
+
 );
 
 // -------------------------------------------------------------------------------------------------
 // disable map rotation using right click + drag
 map.dragRotate.disable();
-
 // -------------------------------------------------------------------------------------------------
 // disable map rotation using touch rotation gesture
 map.touchZoomRotate.disableRotation();
-
 // Add zoom and rotation controls to the map.
 map.addControl(new mapboxgl.NavigationControl());
 
