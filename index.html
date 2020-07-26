@@ -204,7 +204,7 @@
 <!-- Map Name -->
 <div id='map' class="map" style='height:100%; width:100%'>
 
-  <!-- Will allow user to filter items on the map -->
+  <!-- Will allow user to filter items on the map
   <div class="filter-ctrl">
   <input
   id="filter-input"
@@ -212,7 +212,7 @@
   name="filter"
   placeholder="Filter by name"
   />
-  </div>
+  </div> -->
 
   <!-- Adds the geocoder -->
   <div class="geocoder">
@@ -234,7 +234,7 @@
 
   <!-- Legend items -->
   <div id="legend-sp-ineq" class="legend">
-    <h2>Resources</h2>
+    <h2>Hance Resources</h2>
     <div><span style="background-color: #9d4e20"></span>Cocoa</div>
     <div><span style="background-color: #552a11"></span>Coffee</div>
     <div><span style="background-color: #6fb9e2"></span>Cotton</div>
@@ -273,7 +273,7 @@ map.on('load', function () {
 
   // JEDWAB-MORADI RIVERS -----------------------------------------------
   map.addLayer({
-        "id": "Jedwab-Moradi Rivers",
+        "id": "Rivers",
         "type": "line",
         "source": {
           type: 'vector',
@@ -288,9 +288,57 @@ map.on('load', function () {
         }
   });
 
+  // MURDOCK GROUPS -----------------------------------------------
+  map.addLayer({
+        "id": "Murdock Groups",
+        "type": "fill",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.2huj7m0f',
+        },
+        "source-layer": "murdock-cs8eqx",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "fill-color": "white",
+          'fill-opacity': 0.25,
+          "fill-outline-color": "black"
+        }
+  });
+
+  // JEDWAB-MORADI ROADS -----------------------------------------------
+  map.addLayer({
+        "id": "Roads, Improved",
+        "type": "line",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.1fpmqqmv',
+        },
+        "source-layer": "jw_roads_improved-ajeug9",
+        "layout": {
+            "visibility": "none"
+        }
+        //"paint":
+  });
+
+  map.addLayer({
+        "id": "Roads, Paved",
+        "type": "line",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.9sjpm4db',
+        },
+        "source-layer": "jw_roads_paved-5jaaip",
+        "layout": {
+            "visibility": "none"
+        }
+        //"paint":
+  });
+
   // JEDWAB-MORADI RAILWAYS -----------------------------------------------
   map.addLayer({
-        "id": "Jedwab-Moradi Railways",
+        "id": "Railways",
         "type": "line",
         "source": {
           type: 'vector',
@@ -323,26 +371,45 @@ map.on('load', function () {
 
   // EXPLORER ROUTES -----------------------------------------------
   map.addLayer({
-        "id": "Murdock Groups",
-        "type": "fill",
+        "id": "Colonial Capitals",
+        "type": "circle",
         "source": {
           type: 'vector',
-          url: 'mapbox://wm-cad.2huj7m0f',
+          url: 'mapbox://wm-cad.dqxxrlrs',
         },
-        "source-layer": "murdock-cs8eqx",
+        "source-layer": "colonial_capitals-5zscur",
         "layout": {
             "visibility": "none"
         },
         "paint": {
-          "fill-color": "white",
-          'fill-opacity': 0.1,
-          "fill-outline-color": "black"
+          "circle-radius": 3,
+          "circle-color": "red"
         }
+
+  });
+
+  // EXPLORER ROUTES -----------------------------------------------
+  map.addLayer({
+        "id": "Colonial Cities",
+        "type": "circle",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.cr1wvszi',
+        },
+        "source-layer": "jm_cities_1890_1900-5cb7n6",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "circle-radius": 2,
+          "circle-color": "black"
+        }
+
   });
 
 // HANCE DATA -----------------------------------------------
   map.addLayer({
-        "id": "Hance",
+        "id": "Hance Resources",
         "type": "circle",
         "source": {
           type: 'vector',
@@ -350,7 +417,7 @@ map.on('load', function () {
         },
         "source-layer": "hance-34701m",
         "layout": {
-            "visibility": "visible"
+            "visibility": "none"
         },
         "paint": {
           "circle-radius": [
@@ -391,7 +458,7 @@ map.on('load', function () {
                   'Petroleum', '#000000',
                   'Manufactured Products', '#5708a1',
                   'Other Oils', '#000000',
-                   /* other */ '#7c7e7c'
+                   /* other */ '#3d3d3d'
             ],
             'circle-opacity': 0.75
           }
@@ -399,7 +466,7 @@ map.on('load', function () {
 
     // When a click event occurs on a feature in the states layer, open a popup at the
     // location of the click, with description HTML from its properties.
-    map.on('click', 'Hance', function(e) {
+    map.on('click', 'Hance Resources', function(e) {
       //var coordinates = e.features[0].geometry.coordinates.slice();
       var resource = e.features[0].properties.resource;
       var frequency = e.features[0].properties.frequency;
@@ -414,12 +481,12 @@ map.on('load', function () {
       });
 
     // Change the cursor to a pointer when the mouse is over the states layer.
-    map.on('mouseenter', 'Hance', function() {
+    map.on('mouseenter', 'Hance Resources', function() {
     map.getCanvas().style.cursor = 'pointer';
     });
 
     // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'Hance', function() {
+    map.on('mouseleave', 'Hance Resources', function() {
     map.getCanvas().style.cursor = '';
     });
 
@@ -427,16 +494,24 @@ map.on('load', function () {
 
 // --------------------------------------------------------------------------------------------------
 // enumerate ids of the layers
-var toggleableLayerIds = ['Hance', 'Jedwab-Moradi Railways', 'Jedwab-Moradi Rivers', 'Explorer Routes', 'Murdock Groups'];
+var toggleableLayerIds = ['Hance Resources',
+                          'Colonial Capitals',
+                          'Colonial Cities',
+                          'Roads, Paved',
+                          'Roads, Improved',
+                          'Railways',
+                          'Rivers',
+                          'Explorer Routes',
+                          'Murdock Groups'];
 
 // set up the corresponding toggle button for each layer
   for (var i = 0; i < toggleableLayerIds.length; i++) {
     var id = toggleableLayerIds[i];
 
     var link = document.createElement('a');
-    link.href = '#';
-    link.className = 'none';
-    link.textContent = id;
+      link.href = '#';
+      link.className = "none";
+      link.textContent = id;
 
     link.onclick = function(e) {
       var clickedLayer = this.textContent;
