@@ -228,10 +228,9 @@
 
   </div>
 
-  <!-- Menu items -->
-  <div id="feature-menu" class="menu">
+  <nav id="menu" class="menu">
     <h2>Spatial Layers</h2>
-  </div>
+  </nav>
 
   <!-- Legend items -->
   <div id="legend-sp-ineq" class="legend">
@@ -299,7 +298,7 @@ map.on('load', function () {
         },
         "source-layer": "jw_railroads-cq5ajy",
         "layout": {
-            "visibility": "visible"
+            "visibility": "none"
         }
         //"paint":
   });
@@ -320,6 +319,25 @@ map.on('load', function () {
           "line-color": "#4e3f37"
         }
 
+  });
+
+  // EXPLORER ROUTES -----------------------------------------------
+  map.addLayer({
+        "id": "Murdock Groups",
+        "type": "fill",
+        "source": {
+          type: 'vector',
+          url: 'mapbox://wm-cad.2huj7m0f',
+        },
+        "source-layer": "murdock-cs8eqx",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "fill-color": "white",
+          'fill-opacity': 0.1,
+          "fill-outline-color": "black"
+        }
   });
 
 // HANCE DATA -----------------------------------------------
@@ -358,6 +376,23 @@ map.on('load', function () {
                  'Other Oils', '#000000',
                   /* other */ '#7c7e7c'
             ],
+            "circle-stroke-color": [
+                  'match',
+                  ['get', 'resource'],
+                  'Coffee', '#552a11',
+                  //'Coffee', '#1e7625',
+                  'Cacao', '#9d4e20',
+                  //'Cacao', '#1e7625',
+                  'Cotton', '#6fb9e2',
+                  'Peanuts', '#e58015',
+                  'Palm', '#32c908',
+                  'Forest Products', '#164a07',
+                  'Gold', '#9c8107',
+                  'Petroleum', '#000000',
+                  'Manufactured Products', '#5708a1',
+                  'Other Oils', '#000000',
+                   /* other */ '#7c7e7c'
+            ],
             'circle-opacity': 0.75
           }
     });
@@ -391,110 +426,40 @@ map.on('load', function () {
 });
 
 // --------------------------------------------------------------------------------------------------
-var toggleableLayerIds01 = ['Hance'];
+// enumerate ids of the layers
+var toggleableLayerIds = ['Hance', 'Jedwab-Moradi Railways', 'Jedwab-Moradi Rivers', 'Explorer Routes', 'Murdock Groups'];
 
-var link01 = document.createElement('a');
-link01.href = '#';
-link01.textContent = "Hance resources";
-link01.onclick = function (e) {
-    for(var index01 in toggleableLayerIds01) {
-      var clickedLayer01 = toggleableLayerIds01[index01];
+// set up the corresponding toggle button for each layer
+  for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'none';
+    link.textContent = id;
+
+    link.onclick = function(e) {
+      var clickedLayer = this.textContent;
       e.preventDefault();
       e.stopPropagation();
 
-      var visibility01 = map.getLayoutProperty(clickedLayer01, 'visibility');
+      var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 
-      if (visibility01 === 'visible') {
-          map.setLayoutProperty(clickedLayer01, 'visibility', 'none');
-          this.className = '';
+      // toggle layer visibility by changing the layout object's visibility property
+      if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
       } else {
-          this.className = 'active';
-          map.setLayoutProperty(clickedLayer01, 'visibility', 'visible');
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
       }
-    }
-
   };
 
-  var toggleableLayerIds02 = ['Jedwab-Moradi Railways'];
-
-  var link02 = document.createElement('a');
-  link02.href = '#';
-  //link1.className = 'active';
-  link02.textContent = "Colonial railways";
-  link02.onclick = function (e) {
-      for(var index02 in toggleableLayerIds02) {
-        var clickedLayer02 = toggleableLayerIds02[index02];
-        e.preventDefault();
-        e.stopPropagation();
-
-        var visibility02 = map.getLayoutProperty(clickedLayer02, 'visibility');
-
-        if (visibility02 === 'visible') {
-            map.setLayoutProperty(clickedLayer02, 'visibility', 'none');
-            this.className = '';
-        } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer02, 'visibility', 'visible');
-        }
-      }
-
-  };
-
-  var toggleableLayerIds03 = ['Jedwab-Moradi Rivers'];
-
-  var link03 = document.createElement('a');
-  link03.href = '#';
-  link03.textContent = "Rivers";
-  link03.onclick = function (e) {
-      for(var index03 in toggleableLayerIds03) {
-        var clickedLayer03 = toggleableLayerIds03[index03];
-        e.preventDefault();
-        e.stopPropagation();
-
-        var visibility03 = map.getLayoutProperty(clickedLayer03, 'visibility');
-
-        if (visibility03 === 'visible') {
-            map.setLayoutProperty(clickedLayer03, 'visibility', 'none');
-            this.className = '';
-        } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer03, 'visibility', 'visible');
-        }
-      }
-
-  };
-
-  var toggleableLayerIds04 = ['Explorer Routes'];
-
-  var link04 = document.createElement('a');
-  link04.href = '#';
-  link04.textContent = "Explorer Routes";
-  link04.onclick = function (e) {
-      for(var index04 in toggleableLayerIds04) {
-        var clickedLayer04 = toggleableLayerIds04[index04];
-        e.preventDefault();
-        e.stopPropagation();
-
-        var visibility04 = map.getLayoutProperty(clickedLayer04, 'visibility');
-
-        if (visibility04 === 'visible') {
-            map.setLayoutProperty(clickedLayer04, 'visibility', 'none');
-            this.className = '';
-        } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer04, 'visibility', 'visible');
-        }
-      }
-
-  };
-
-// -------------------------------------------------------------------------------------------------
-// Adds the layer selection boxes to the map
-var layer_menu = document.getElementById('feature-menu');
-layer_menu.appendChild(link01);
-layer_menu.appendChild(link02);
-layer_menu.appendChild(link03);
-layer_menu.appendChild(link04);
+  // -------------------------------------------------------------------------------------------------
+  // Adds the layer selection boxes to the map
+  var layers = document.getElementById('menu');
+  layers.appendChild(link);
+}
 
 // -------------------------------------------------------------------------------------------------
 // Add a legend to the map
@@ -519,6 +484,7 @@ map.addControl(
 // -------------------------------------------------------------------------------------------------
 // disable map rotation using right click + drag
 map.dragRotate.disable();
+
 // -------------------------------------------------------------------------------------------------
 // disable map rotation using touch rotation gesture
 map.touchZoomRotate.disableRotation();
