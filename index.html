@@ -235,14 +235,15 @@
   <!-- Legend items -->
   <div id="legend-sp-ineq" class="legend">
     <h2>Hance Resources</h2>
-    <div><span style="background-color: #9d4e20"></span>Cocoa</div>
-    <div><span style="background-color: #552a11"></span>Coffee</div>
-    <div><span style="background-color: #6fb9e2"></span>Cotton</div>
+    <p><i>Hover over circle to see resource.</i></p>
+    <div><span style="background-color: #9d4e20"></span>Cacao</div>
+    <div><span style="background-color: #3c1d0c"></span>Coffee</div>
+    <div><span style="background-color: #3ca1d7"></span>Cotton</div>
     <div><span style="background-color: #164a07"></span>Forest Products</div>
-    <div><span style="background-color: #5708a1"></span>Manufactured Goods</div>
-    <div><span style="background-color: #7c7e7c"></span>Minerals</div>
+    <div><span style="background-color: #561c8d"></span>Manufactured Goods</div>
+    <div><span style="background-color: #7d7d7d"></span>Minerals</div>
     <div><span style="background-color: #32c908"></span>Palm</div>
-    <div><span style="background-color: #e58015"></span>Peanuts</div>
+    <div><span style="background-color: #e58015"></span>Peanuts (Groundnuts)</div>
     <div><span style="background-color: #000000"></span>Petroleum</div>
   </div>
 
@@ -271,6 +272,23 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoid20tY2FkIiwiYSI6ImNrYjZsZ3NsbTAyNHEyeHFjeHo4N
 // Map layers ====================================================
 map.on('load', function () {
 
+  // TEST RASTER -----------------------------------------------
+  map.addLayer({
+        "id": "Test Raster",
+        "type": "raster",
+        "source": {
+          type: 'raster',
+          url: 'mapbox://wm-cad.23xinjg6',
+        },
+        "source-layer": "aridity_masked-1x6co5",
+        "layout": {
+            "visibility": "none"
+        },
+        "paint": {
+          "raster-saturation": 1
+        }
+  });
+
   // JEDWAB-MORADI RIVERS -----------------------------------------------
   map.addLayer({
         "id": "Rivers",
@@ -284,7 +302,9 @@ map.on('load', function () {
             "visibility": "none"
         },
         "paint": {
-          "line-color": "#3678ce"
+          "line-color": "#1e4599",
+          "line-width": 2.0,
+          'line-opacity': 0.4
         }
   });
 
@@ -301,10 +321,36 @@ map.on('load', function () {
             "visibility": "none"
         },
         "paint": {
-          "fill-color": "white",
-          'fill-opacity': 0.25,
-          "fill-outline-color": "black"
+          "fill-color": "#89c8c3",
+          'fill-opacity': 0.15,
+          "fill-outline-color": "#26504d"
         }
+  });
+
+  // When a click event occurs on a feature in the states layer, open a popup at the
+  // location of the click, with description HTML from its properties.
+  map.on('click', 'Murdock Groups', function(e) {
+    //var coordinates = e.features[0].geometry.coordinates.slice();
+    var group_name = e.features[0].properties.Name_Displ;
+    var group_culture = e.features[0].properties.CultureGrp;
+
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML('<b>Group: </b>' + group_name + '<br><b>Cultural Group: </b>' + group_culture)
+      //.closeOnClick(True)
+      //.anchor('center')
+      .addTo(map);
+
+    });
+
+  // Change the cursor to a pointer when the mouse is over the states layer.
+  map.on('mouseenter', 'Murdock Groups', function() {
+  map.getCanvas().style.cursor = 'pointer';
+  });
+
+  // Change it back to a pointer when it leaves.
+  map.on('mouseleave', 'Murdock Groups', function() {
+  map.getCanvas().style.cursor = '';
   });
 
   // JEDWAB-MORADI ROADS -----------------------------------------------
@@ -318,8 +364,12 @@ map.on('load', function () {
         "source-layer": "jw_roads_improved-ajeug9",
         "layout": {
             "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#b25c5c",
+          "line-width": 0.5,
+          'line-opacity': 0.75
         }
-        //"paint":
   });
 
   map.addLayer({
@@ -332,8 +382,12 @@ map.on('load', function () {
         "source-layer": "jw_roads_paved-5jaaip",
         "layout": {
             "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#6a0c0c",
+          "line-width": 1.0,
+          'line-opacity': 0.75
         }
-        //"paint":
   });
 
   // JEDWAB-MORADI RAILWAYS -----------------------------------------------
@@ -347,8 +401,12 @@ map.on('load', function () {
         "source-layer": "jw_railroads-cq5ajy",
         "layout": {
             "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#512910",
+          "line-width": 1.5,
+          'line-opacity': 0.75
         }
-        //"paint":
   });
 
   // EXPLORER ROUTES -----------------------------------------------
@@ -364,7 +422,9 @@ map.on('load', function () {
             "visibility": "none"
         },
         "paint": {
-          "line-color": "#4e3f37"
+          "line-color": "#3a5723",
+          "line-width": 1,
+          'line-opacity': 0.6
         }
 
   });
@@ -382,7 +442,7 @@ map.on('load', function () {
             "visibility": "none"
         },
         "paint": {
-          "circle-radius": 3,
+          "circle-radius": 4,
           "circle-color": "red"
         }
 
@@ -401,7 +461,7 @@ map.on('load', function () {
             "visibility": "none"
         },
         "paint": {
-          "circle-radius": 2,
+          "circle-radius": 3,
           "circle-color": "black"
         }
 
@@ -429,66 +489,64 @@ map.on('load', function () {
           "circle-color": [
                  'match',
                  ['get', 'resource'],
-                 'Coffee', '#552a11',
-                 //'Coffee', '#1e7625',
+                 'Coffee', '#3c1d0c',
                  'Cacao', '#9d4e20',
-                 //'Cacao', '#1e7625',
-                 'Cotton', '#6fb9e2',
+                 'Cotton', '#3ca1d7',
                  'Peanuts', '#e58015',
                  'Palm', '#32c908',
                  'Forest Products', '#164a07',
-                 'Gold', '#9c8107',
                  'Petroleum', '#000000',
-                 'Manufactured Products', '#5708a1',
+                 'Manufactured Products', '#561c8d',
                  'Other Oils', '#000000',
-                  /* other */ '#7c7e7c'
+                  /* other */ '#7d7d7d'
             ],
             "circle-stroke-color": [
                   'match',
                   ['get', 'resource'],
-                  'Coffee', '#552a11',
-                  //'Coffee', '#1e7625',
+                  'Coffee', '#3c1d0c',
                   'Cacao', '#9d4e20',
-                  //'Cacao', '#1e7625',
-                  'Cotton', '#6fb9e2',
+                  'Cotton', '#3ca1d7',
                   'Peanuts', '#e58015',
                   'Palm', '#32c908',
                   'Forest Products', '#164a07',
-                  'Gold', '#9c8107',
                   'Petroleum', '#000000',
-                  'Manufactured Products', '#5708a1',
+                  'Manufactured Products', '#561c8d',
                   'Other Oils', '#000000',
-                   /* other */ '#3d3d3d'
+                   /* other */ '#7d7d7d'
             ],
-            'circle-opacity': 0.75
+            'circle-stroke-width': 0.5,
+            'circle-stroke-opacity': 1.0,
+            'circle-opacity': 0.5
           }
     });
 
-    // When a click event occurs on a feature in the states layer, open a popup at the
-    // location of the click, with description HTML from its properties.
-    map.on('click', 'Hance Resources', function(e) {
-      //var coordinates = e.features[0].geometry.coordinates.slice();
-      var resource = e.features[0].properties.resource;
-      var frequency = e.features[0].properties.frequency;
+    // Pop up with travel time
+    var popup1 = new mapboxgl.Popup({
+          closeButton: true,
+          closeOnClick: true
+          });
 
-      new mapboxgl.Popup()
-        .setLngLat(e.lngLat)
-        .setHTML('<b>Product: </b>' + resource + '<br><b>Frequency: </b>' + frequency)
-        //.closeOnClick(True)
-        //.anchor('center')
-        .addTo(map);
+    map.on('mouseenter', 'Hance Resources', function(e) {
 
-      });
+          // Change the cursor style as a UI indicator.
+          map.getCanvas().style.cursor = 'pointer';
 
-    // Change the cursor to a pointer when the mouse is over the states layer.
-    map.on('mouseenter', 'Hance Resources', function() {
-    map.getCanvas().style.cursor = 'pointer';
-    });
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var resource = e.features[0].properties.resource;
+          var frequency = e.features[0].properties.frequency;
 
-    // Change it back to a pointer when it leaves.
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          popup1
+          .setLngLat(coordinates)
+          .setHTML('<b>Product: </b>' + resource + '<br><b>Frequency: </b>' + frequency)
+          .addTo(map);
+          });
+
     map.on('mouseleave', 'Hance Resources', function() {
-    map.getCanvas().style.cursor = '';
-    });
+          map.getCanvas().style.cursor = '';
+          popup1.remove();
+          });
 
 });
 
